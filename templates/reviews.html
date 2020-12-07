@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews</title>
+</head>
+<body>
+    {% for review in reviews %}
+        {{ review.book_title }}<br>
+        {{ review.author }}<br>
+        {{ review.genre_name }}<br>
+        {{ review.user_name }}<br>
+        {{ review.purchase_link }}<br>
+        {{ review.review_body }}<br>
+    {% endfor %}
+</body>
+</html>
