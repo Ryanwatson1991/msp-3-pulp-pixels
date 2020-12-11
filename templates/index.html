@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+ <!-- Page Content -->
+<div class="container">
+    <div class="row">
+        {% for review in reviews %}
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">{{ review.book_title }} by {{ review.author }}</a>
+                        </h4>
+                        <p class="card-text">{{ review.review_body }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- /.row -->
+</div>
+
+{% endblock %}

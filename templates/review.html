@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h2>This is not on the base template page!!!</h2>
-
     {% for review in reviews %}
         {{ review.book_title }}<br>
         {{ review.author }}<br>
