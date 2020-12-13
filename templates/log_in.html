@@ -3,22 +3,16 @@
 
  <!-- Page Content -->
 <div class="container mb-5 mt-3">
-    <h2 class="center-text mb-3">Join our book loving community!</h2>
+    <h2 class="center-text mb-3">Welcome back. Please log in below. </h2>
     <div class="row">
-        
             <div class="col-12">
                 <div class="card w-100 h-100">
-                    <!--Sign-up form-->
-                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action="{{ url_for('sign_up') }}">
-                        <!--Username Field-->
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input id="username" name="username" type="text" class="form-control" minlength="6" maxlength="20" pattern="^[a-zA-Z0-9]{6,20}$" required>                        
-                        </div>
+                    <!--Log in form-->
+                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action="{{ url_for('log_in') }}">
                         <!--Email Field-->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+                            <input type="email" name="email" class="form-control" id="email" required>
                             </div>
                         <!--Password Field-->
                         <div class="mb-3">
@@ -26,7 +20,7 @@
                             <input type="password" name="password" class="form-control" id="password" minlength="6" required>
                         </div>
                         <!--Submit button-->
-                        <button type="submit" class="btn btn-primary">Sign-up</button>
+                        <button type="submit" class="btn btn-primary">Log in</button>
                         <div class="m-3 red">
                             {% with messages = get_flashed_messages() %}
                                 {% if messages %}
