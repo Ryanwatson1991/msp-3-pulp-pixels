@@ -13,22 +13,29 @@
                         <!--Username Field-->
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input id="username" name="username" type="text" class="form-control">
-                            
+                            <input id="username" name="username" type="text" class="form-control" minlength="6" maxlength="20" pattern="^[a-zA-Z0-9]{6,20}$" required>                        
                         </div>
                         <!--Email Field-->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                        </div>
+                            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+                            </div>
                         <!--Password Field-->
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" id="password">
+                            <label for="password" class="form-label" required>Password</label>
+                            <input type="password" name="password" class="form-control" id="password" minlength="6" required>
                         </div>
                         <!--Submit button-->
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Sign-up</button>
+                        <div class="m-3 red">
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="light-blue lighten-4 center-align">{{ message }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %} 
+                        </div>
                     </form>
                 </div>
             </div>

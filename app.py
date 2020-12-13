@@ -32,12 +32,20 @@ def sign_up():
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
+        existing_email = mongo.db.users.find_one(
+            {"email": request.form.get("email").lower()})
+
         if existing_user:
-            flash("Username already exists")
+            flash("Username or email already in use")
+            return redirect(url_for("sign_up"))
+
+        elif existing_email:
+            flash("Username or email already in use")
             return redirect(url_for("sign_up"))
 
         sign_up = {
             "username": request.form.get("username").lower(),
+            "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(sign_up)
