@@ -73,7 +73,7 @@ def log_in():
                         request.form.get("username")))
                     return redirect(url_for(
                         "profile", username=session["user"]))
-            
+
             else:
                 # invalid password
                 flash("Incorrect Username/Password")
@@ -92,7 +92,19 @@ def profile(username):
     # get session user's details from database
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    return render_template("profile.html", username=username)
+
+    if session["user"]:
+        return render_template("profile.html", username=username)
+
+    return redirect(url_for("log_in"))
+
+
+@app.route("/log_out")
+def log_out():
+    #remove user from session cookies
+    flash("you have been logged out")
+    session.pop("user")
+    return redirect(url_for("log_in"))
 
 
 if __name__ == "__main__":
