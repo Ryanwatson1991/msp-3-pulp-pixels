@@ -53,6 +53,7 @@ def sign_up():
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
+        return redirect(url_for("profile", username=session["user"]))
     return render_template("sign_up.html")
 
 
@@ -61,27 +62,37 @@ def log_in():
     if request.method == "POST":
         # check if username already exists in db
         existing_user = mongo.db.users.find_one(
-            {"email": request.form.get("email").lower()})
+            {"username": request.form.get("username").lower()})
 
         if existing_user: 
             # Check hashed password
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("email").lower()
+                    session["user"] = request.form.get("username").lower()
                     flash("Welcome back, {}".format(
-                        request.form.get("username"))) # Make this line flash the username
+                        request.form.get("username")))
+                    return redirect(url_for(
+                        "profile", username=session["user"]))
             
             else:
                 # invalid password
-                flash("Incorrect Email/Password")
+                flash("Incorrect Username/Password")
                 return redirect(url_for("log_in"))
 
         else:
             # username doesn't exist
-            flash("Incorrect Email/Password")
+            flash("Incorrect Username/Password")
             return redirect(url_for("log_in"))
 
     return render_template("log_in.html")
+
+
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username): 
+    # get session user's details from database
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("profile.html", username=username)
 
 
 if __name__ == "__main__":
