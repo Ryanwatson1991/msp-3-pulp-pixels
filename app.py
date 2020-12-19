@@ -107,6 +107,11 @@ def log_out():
     return redirect(url_for("log_in"))
 
 
+@app.route("/write_review")
+def write_review():
+    return render_template("write_review.html")
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")), 
