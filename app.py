@@ -109,7 +109,8 @@ def log_out():
 
 @app.route("/write_review")
 def write_review():
-    return render_template("write_review.html")
+    genre = mongo.db.genre.find().sort("genre_name", 1)
+    return render_template("write_review.html", genre=genre)
 
 
 if __name__ == "__main__":

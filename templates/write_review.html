@@ -9,33 +9,50 @@
                 <div class="card w-100 h-100">
                         <!--Username Field-->
                     <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action=""></form>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Book title</label>
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Author</label>
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Genre</label>
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="name@example.com">
-                        </div>
-                       <!-- <div class="mb-3">
-                            <label for="formFileSm" class="form-label">Small file input example</label>
-                            <input class="form-control form-control-sm" id="formFileSm" type="file">
-                        </div>-->
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="20"></textarea>
-                        </div>                  
-                            {% with messages = get_flashed_messages() %}
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <p>{{ message }}</p>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endwith %} 
+                        
+                            <div class="mb-3">
+                                <label for="book_title" class="form-label">Book title</label>
+                                <input type="text" class="form-control form-control-lg" name="book_title" id="book_title" placeholder="Which book are you reviewing?" required>
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label for="author" class="form-label">Author</label>
+                                <input type="text" class="form-control form-control-lg" name="author" id="author" placeholder="Who wrote it?" required>
+                            </div>
+                        
+                        
+                            <div class="mb-3">
+                                <label for="genre_name" class="form-label">Genre</label>
+                                <br>
+                                <select class="form-select form-select-lg mb-3" name="genre_name" id="genre_name" aria-label="genre_name">
+                                    <option selected disabled>Pick a Genre</option>
+                                    {% for genres in genre %}
+                                    <option value="{{ genres.genre_name }}">{{ genres.genre_name }}</option>
+                                    {% endfor %}}
+                                </select>
+                            </div>
+                        <!-- 
+                        <div class="row">  
+                            <div class="mb-3">
+                                <label for="formFileSm" class="form-label">Small file input example</label>
+                                <input class="form-control form-control-sm" id="formFileSm" type="file">
+                            </div>
+                        </row>
+                        -->
+                        
+                            <div class="mb-3">
+                                <label for="review_body" class="form-label">Review:</label>
+                                <textarea class="form-control" name="review_body" id="review_body" rows="20" placeholder="Okay, now's your chance to get writing!" required></textarea>
+                            </div>
+                               
+                                {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <p>{{ message }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                        <button type="submit" class="btn btn-primary">Upload Review</button> 
                     </form>
                 </div>
             </div>
