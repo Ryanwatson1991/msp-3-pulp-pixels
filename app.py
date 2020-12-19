@@ -94,21 +94,33 @@ def profile(username):
     email = mongo.db.users.find_one()["email"]
 
     if session["user"]:
-        return render_template("profile.html", username=username, bio=bio, email=email)
+        return render_template(
+            "profile.html", username=username, bio=bio, email=email)
 
     return redirect(url_for("log_in"))
 
 
 @app.route("/log_out")
 def log_out():
-    #remove user from session cookies
+    # remove user from session cookies
     flash("you have been logged out")
     session.pop("user")
     return redirect(url_for("log_in"))
 
 
-@app.route("/write_review")
+@app.route("/write_review", methods=["GET", "POST"])
 def write_review():
+    if request.method == "POST":
+        review = {
+            "book_title": request.form.get("book_title"),
+            "author": request.form.get("author"),
+            "genre_name": request.form.get("genre_name"),
+            "review_body": request.form.get("review_body"),
+        }
+        mongo.db.reviews.insert_one(review)
+        flash("Review Uploaded")
+        return redirect(url_for("get_index"))
+
     genre = mongo.db.genre.find().sort("genre_name", 1)
     return render_template("write_review.html", genre=genre)
 

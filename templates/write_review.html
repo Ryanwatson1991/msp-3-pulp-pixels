@@ -7,20 +7,19 @@
     <div class="row">
             <div class="col-12">
                 <div class="card w-100 h-100">
-                        <!--Username Field-->
-                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action=""></form>
                         
+                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action="{{ url_for('write_review') }}"></form>
+                        <!--Book Title-->
                             <div class="mb-3">
                                 <label for="book_title" class="form-label">Book title</label>
                                 <input type="text" class="form-control form-control-lg" name="book_title" id="book_title" placeholder="Which book are you reviewing?" required>
                             </div>
-                        
+                        <!--Author of book-->
                             <div class="mb-3">
                                 <label for="author" class="form-label">Author</label>
                                 <input type="text" class="form-control form-control-lg" name="author" id="author" placeholder="Who wrote it?" required>
                             </div>
-                        
-                        
+                        <!--Genre Name-->
                             <div class="mb-3">
                                 <label for="genre_name" class="form-label">Genre</label>
                                 <br>
@@ -31,7 +30,7 @@
                                     {% endfor %}}
                                 </select>
                             </div>
-                        <!-- 
+                        <!-- Upload book image - need to work out how to do this
                         <div class="row">  
                             <div class="mb-3">
                                 <label for="formFileSm" class="form-label">Small file input example</label>
@@ -39,12 +38,12 @@
                             </div>
                         </row>
                         -->
-                        
+                        <!--Review body-->
                             <div class="mb-3">
                                 <label for="review_body" class="form-label">Review:</label>
                                 <textarea class="form-control" name="review_body" id="review_body" rows="20" placeholder="Okay, now's your chance to get writing!" required></textarea>
                             </div>
-                               
+                            <button type="submit" class="btn btn-primary">Upload Review</button> 
                                 {% with messages = get_flashed_messages() %}
                                     {% if messages %}
                                         {% for message in messages %}
@@ -52,7 +51,7 @@
                                         {% endfor %}
                                     {% endif %}
                                 {% endwith %}
-                        <button type="submit" class="btn btn-primary">Upload Review</button> 
+                        
                     </form>
                 </div>
             </div>
