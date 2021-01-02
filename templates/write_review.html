@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="card w-100 h-100">
                         
-                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action="{{ url_for('write_review') }}"></form>
+                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action="{{ url_for('write_review') }}">
                         <!--Book Title-->
                             <div class="mb-3">
                                 <label for="book_title" class="form-label">Book title</label>
@@ -51,7 +51,6 @@
                                         {% endfor %}
                                     {% endif %}
                                 {% endwith %}
-                        
                     </form>
                 </div>
             </div>
