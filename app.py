@@ -125,6 +125,8 @@ def write_review():
             "author": request.form.get("author"),
             "genre_name": request.form.get("genre_name"),
             "review_body": request.form.get("review_body"),
+            "purchase_link": "www.ryansgoodbookshop.com",
+            "user_name": session["user"]
         }
         mongo.db.reviews.insert_one(review)
         flash("Review Uploaded")
