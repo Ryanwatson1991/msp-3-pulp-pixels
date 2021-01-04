@@ -25,7 +25,7 @@
         <!--<p>BUY BOOK HERE: {{ review.purchase_link }}/{{ review.book_title.strip()|lower|truncate(100) }}<br></p>-->
         {% if session.user|lower == review.user_name|lower %}
             <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn btn-primary">Edit Review</a>
-            <a type="" class="btn btn-danger">Delete Review</a>
+            <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete Review</a>
         {% endif %} 
 
         <hr>
