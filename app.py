@@ -107,13 +107,15 @@ def log_out():
     session.pop("user")
     return redirect(url_for("log_in"))
 
-@app.route('/review/<int:review_id>')
-def review(review_id):
-    review = mongo.db.reviews.query.filter_by(id=review_id).one()
 
-    return render_template('review.html', review=review)
+@app.route("/review/<review_id>")
+def review(review_id):
+    review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+
+    return render_template("review.html", review=review)
 
     # found solution for this^^^^ here https://github.com/PrettyPrinted/flask_blog/blob/master/app.py
+
 
 @app.route("/write_review", methods=["GET", "POST"])
 def write_review():
