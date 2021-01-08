@@ -7,7 +7,7 @@
         {% for review in reviews %}
             <div class="col-lg-4 col-sm-6 portfolio-item">
                 <div class="card h-100">
-                    <a href="{{ url_for('review', review_id=review._id) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                    <a href="{{ url_for('review', review_id=review._id) }}"><img class="card-img-top" src="{{ review.book_cover }}" alt=""></a>
                     <div class="card-body">
                         <h4 class="card-title">
                             <a href="{{ url_for('review', review_id=review._id) }}">{{ review.book_title }} by {{ review.author }}</a>

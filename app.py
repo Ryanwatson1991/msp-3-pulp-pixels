@@ -21,12 +21,18 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_index")
 def get_index():
+    """
+    This route gets the index.
+    """
     reviews = mongo.db.reviews.find().sort("_id", -1)
     return render_template("index.html", reviews=reviews)
 
 
 @app.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
+    """
+    This route is for user sign up.
+    """
     if request.method == "POST":
         # check if username already exists in db
         existing_user = mongo.db.users.find_one(
@@ -111,7 +117,6 @@ def log_out():
 @app.route("/review/<review_id>")
 def review(review_id):
     review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
-
     return render_template("review.html", review=review)
 
     # found solution for this^^^^ here https://github.com/PrettyPrinted/flask_blog/blob/master/app.py
@@ -126,7 +131,8 @@ def write_review():
             "genre_name": request.form.get("genre_name"),
             "review_body": request.form.get("review_body"),
             "purchase_link": "www.ryansgoodbookshop.com",
-            "user_name": session["user"]
+            "user_name": session["user"],
+            "book_cover": request.form.get("book_cover")
         }
         mongo.db.reviews.insert_one(review)
         flash("Review Uploaded")
@@ -145,7 +151,7 @@ def edit_review(review_id):
             "genre_name": request.form.get("genre_name"),
             "review_body": request.form.get("review_body"),
             "purchase_link": "www.ryansgoodbookshop.com",
-            "user_name": session["user"]
+            "user_name": session["user"],
         }
         mongo.db.reviews.update({"_id": ObjectId(review_id)}, edit)
         flash("Review Edited")
@@ -164,5 +170,5 @@ def delete_review(review_id):
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
-            port=int(os.environ.get("PORT")), 
-            debug=True)
+        port=int(os.environ.get("PORT")), 
+        debug=True)
