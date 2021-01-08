@@ -28,6 +28,13 @@ def get_index():
     return render_template("index.html", reviews=reviews)
 
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    query = request.form.get("query")
+    reviews = mongo.db.reviews.find({"$text": {"$search": query}}).sort("_id", -1)
+    return render_template("index.html", reviews=reviews)
+
+
 @app.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
     """
@@ -152,6 +159,7 @@ def edit_review(review_id):
             "review_body": request.form.get("review_body"),
             "purchase_link": "www.ryansgoodbookshop.com",
             "user_name": session["user"],
+            "book_cover": request.form.get("book_cover")
         }
         mongo.db.reviews.update({"_id": ObjectId(review_id)}, edit)
         flash("Review Edited")
@@ -167,6 +175,7 @@ def delete_review(review_id):
     mongo.db.reviews.remove({"_id": ObjectId(review_id)})
     flash("Review Deleted")
     return redirect(url_for("get_index"))
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

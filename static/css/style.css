@@ -5,3 +5,25 @@
 .red {
     color: red;
 }
+
+.jumbotron {
+    background: rgba(0, 0, 0, 0.5);
+    height: 70%;
+}
+
+.carousel-inner > .item {
+    -webkit-transition: 2s ease-in-out left;
+    -moz-transition: 2s ease-in-out left;
+    -o-transition: 2s ease-in-out left;
+    transition:2s ease-in-out left;
+}
+
+.head-img {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
