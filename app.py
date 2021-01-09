@@ -127,7 +127,8 @@ def log_out():
 @app.route("/review/<review_id>")
 def review(review_id):
     review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
-    return render_template("review.html", review=review)
+    comments = mongo.db.comments.find({"book_id": ObjectId(review_id)})
+    return render_template("review.html", review=review, comments=comments)
 
     # found solution for this^^^^ here https://github.com/PrettyPrinted/flask_blog/blob/master/app.py
 
@@ -180,16 +181,18 @@ def delete_review(review_id):
     return redirect(url_for("get_index"))
 
 
-@app.route("/comment", methods=["GET", "POST"])
-def comment():
+@app.route("/comment/<review_id>", methods=["GET", "POST"])
+def comment(review_id):
     if request.method == "POST":
+        discussion_id = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
         comment = {
             "comment_body": request.form.get("comment_body"),
             "user_name": session["user"],
+            "book_id": discussion_id["_id"]
         }
         mongo.db.comments.insert_one(comment)
         flash("Comment Uploaded")
-    return redirect(url_for("get_index"))    
+    return redirect(url_for('review', review_id=review_id))    
 
 
 if __name__ == "__main__":

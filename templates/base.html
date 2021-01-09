@@ -51,7 +51,9 @@
   
     <article>
         {% block content %}
-            
+        {% with messages = get_flashed_messages() %}
+
+        {% endwith %}            
         {% endblock %}
     </article>
         <!-- Footer -->
