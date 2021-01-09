@@ -100,15 +100,18 @@ def log_in():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username): 
-    # get session user's details from database
+    # get session user's username from database
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    bio = mongo.db.users.find_one()["bio"]
-    email = mongo.db.users.find_one()["email"]
+    # Get session user's reviews
+    current_user = session["user"]
+    reviews = mongo.db.reviews.find({"user_name": current_user})
+    
+    user_details = mongo.db.users.find_one(current_user)
 
     if session["user"]:
         return render_template(
-            "profile.html", username=username, bio=bio, email=email)
+            "profile.html", username=username, user_details=user_details, reviews=reviews)
 
     return redirect(url_for("log_in"))
 
@@ -175,6 +178,18 @@ def delete_review(review_id):
     mongo.db.reviews.remove({"_id": ObjectId(review_id)})
     flash("Review Deleted")
     return redirect(url_for("get_index"))
+
+
+@app.route("/comment", methods=["GET", "POST"])
+def comment():
+    if request.method == "POST":
+        comment = {
+            "comment_body": request.form.get("comment_body"),
+            "user_name": session["user"],
+        }
+        mongo.db.comments.insert_one(comment)
+        flash("Comment Uploaded")
+    return redirect(url_for("get_index"))    
 
 
 if __name__ == "__main__":
