@@ -166,8 +166,7 @@ def edit_review(review_id):
             "book_cover": request.form.get("book_cover")
         }
         mongo.db.reviews.update({"_id": ObjectId(review_id)}, edit)
-        flash("Review Edited")
-        return redirect(url_for("get_index"))
+        return redirect(url_for('review', review_id=review_id))
 
     review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
     genre = mongo.db.genre.find().sort("genre_name", 1)

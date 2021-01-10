@@ -63,7 +63,7 @@
                     <a href="{{ url_for('review', review_id=review._id) }}"><img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}"></a>
                     <div class="card-body">
                         <h4 class="card-title">
-                            <a href="{{ url_for('review', review_id=review._id) }}">{{ review.book_title }} by {{ review.author }}</a>
+                            <a href="{{ url_for('review', review_id=review._id) }}" class="review-title">{{ review.book_title }} by {{ review.author }}</a>
                         </h4>
                         <p class="card-text">{{ review.review_body | truncate(100) }}</p>
                         <!--Found 'truncate' function here: https://stackoverflow.com/questions/33627646/python-flask-template-return-first-150-characters-->

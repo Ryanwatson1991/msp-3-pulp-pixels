@@ -3,6 +3,10 @@ body {
     padding: 0;
 }
 
+.red {
+    color: red;
+}
+
 .center-text {
     text-align: center;
 }
@@ -34,7 +38,7 @@ body {
   max-height:45%;
 }
 
-/* Header */
+/* Index page Header */
 
 .jumbotron {
     background: rgba(0, 0, 0, 0.5);
@@ -89,4 +93,67 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+/* Index Page Content */
+.review-title{
+    color: #A69480;
+}
+
+.review-title:hover{
+    color: #8C325E;
+    text-decoration: none;
+}
+
+/* Review Page Content */
+.review-title-header{
+    color: #A69480;
+}
+
+.book-cover{
+    max-height: 25rem;
+}
+
+.review-info{
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding-left: 5%;
+    color: #A69480
+}
+
+.review-purple-button {
+    background: #8C325E;
+    border: none;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 2.5%;
+    color: #D9C2A7;
+}
+
+.review-purple-button:hover {
+    color: #8C325E;
+    background: #D9C2A7;
+}
+
+.red-button {
+    background: #BF1241;
+    border: none;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 2.5%;
+    color: #D9C2A7;
+}
+
+.red-button:hover {
+    color: #8C325E;
+    background: #D9C2A7;
+}
+
+#sure {
+    font-weight: 600;
+}
+
+.comment-head {
+    background: #8C325E;
+    color:#D9C2A7;
 }

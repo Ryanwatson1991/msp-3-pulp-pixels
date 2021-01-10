@@ -48,13 +48,15 @@
                             </div>
                             <a href="{{ url_for('get_index') }}" class="btn btn-danger">Cancel</a>
                             <button type="submit" class="btn btn-primary">Edit Review</button> 
-                                {% with messages = get_flashed_messages() %}
-                                    {% if messages %}
-                                        {% for message in messages %}
-                                            <p>{{ message }}</p>
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endwith %}
+                                <div>
+                                    {% with messages = get_flashed_messages() %}
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                <p>{{ message }}</p>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
                     </form>
                 </div>
             </div>
