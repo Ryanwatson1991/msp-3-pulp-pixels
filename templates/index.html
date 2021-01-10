@@ -12,29 +12,35 @@
       <div class="carousel-inner" role="listbox">
         <!-- Slide One - Set the background image for this slide in the line below -->
         <div class="carousel-item active" style="background-image: url('/static/img/head1.2.jpg')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Welcome to Pages and Pixels!</h3>
-            <p>Read. Review. Discuss.</p>
-          </div>
+            <div class="carousel-caption d-none d-md-block">
+                <div class="jumbotron">
+                    <h3 class="header-title">Welcome to Pages and Pixels!</h3>
+                    <p class="header-text">A world for book-lovers where you can read reviews, write reviews and discuss your favourite books.</p>
+                </div>
+            </div>
         </div>
         <!-- Slide Two - Set the background image for this slide in the line below -->
         <div class="carousel-item" style="background-image: url('/static/img/head2.jpg')">
-          <div class="carousel-caption d-none d-md-block">
-            <form action="{{ url_for('search') }}" method="POST" class="jumbotron mt-5">
-                <label for="query"> 
-                    <h3>Search Reviews</h3>
-                </label>   
-                <input class="form-control form-control-lg" id="query" name="query" type="text" placeholder="Type in a book name, author, genre or user">
-                 <button type="submit" class="btn btn-primary">search</button> 
-            </form>
-          </div>
+            <div class="carousel-caption d-block">
+                <div class="jumbotron search-jumbo">
+                    <form action="{{ url_for('search') }}" method="POST">
+                        <label for="query"> 
+                            <h3 class="header-title">Search Reviews</h3>
+                        </label>   
+                        <input class="form-control form-control-lg" id="query" name="query" type="text" placeholder="Type in a book name, author, genre or user">
+                        <button type="submit" class="btn btn-primary purple-button">Search</button> 
+                    </form>
+                </div>
+            </div>
         </div>
         <!-- Slide Three - Set the background image for this slide in the line below -->
         <div class="carousel-item" style="background-image: url('/static/img/head4.jpg')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Log-In</h3>
-            <p>Good Reads throws Login right in your face, so I'm gonna do it too. </p>
-          </div>
+            <div class="carousel-caption d-block">
+            <div class="jumbotron">
+                <h3 class="header-title">Come into our world! It's easy to get started</h3>
+                <a href="{{ url_for('sign_up') }}" class="btn btn-primary purple-button">Sign-up</a> 
+            </div>
+            </div>
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
