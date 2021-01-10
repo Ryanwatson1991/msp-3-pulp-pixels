@@ -41,11 +41,13 @@
                         <!--Submit button-->
                         <button type="submit" class="btn btn-primary">Sign-up</button>
                         <div class="m-3 red">
+                            {% with messages = get_flashed_messages() %}
                                 {% if messages %}
                                     {% for message in messages %}
                                         <p>{{ message }}</p>
                                     {% endfor %}
                                 {% endif %}
+                            {% endwith %} 
                         </div>
                     </form>
                 </div>

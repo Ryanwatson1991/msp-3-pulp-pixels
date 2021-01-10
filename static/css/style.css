@@ -1,13 +1,39 @@
+body {
+    background: #F2F2EB;
+    padding: 0;
+}
+
 .center-text {
     text-align: center;
 }
 
-.red {
-    color: red;
+.purple {
+    background: #8C325E
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #D9C2A7;
+}
+
+.logo {
+    display: inline-flex !important;
+
+}
+
+@media only screen and (max-width: 766px) {
+.navbar-toggler {
+    position: absolute;
+    margin-left: 75%;
+}
+}
+
+.img-resize {
+  max-width:45%;
+  max-height:45%;
 }
 
 .jumbotron {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0);
     height: 70%;
 }
 

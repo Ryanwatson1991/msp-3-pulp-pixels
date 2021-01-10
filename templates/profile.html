@@ -18,12 +18,14 @@
             <h2 class="center-text">Reviews by {{ username }}</h2>
         </div>
         <div class="col-md-4">
-            <a href="#">
-                <img class="img-fluid rounded mb-3 mb-md-0" src="{{ review.book_cover }}" alt="">
+            <a href="{{ url_for('review', review_id=review._id) }}">
+                <img class="img-fluid rounded mb-3 mb-md-0" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
             </a>
         </div>
         <div class="col-md-8">
-            <h3>{{ review.book_title }} by {{ review.author }}</h3>
+            <a href="{{ url_for('review', review_id=review._id) }}">
+                <h3>{{ review.book_title }} by {{ review.author }}</h3>
+            </a>
             <p>{{ review.review_body | truncate(100) }}</p>
             <a class="btn btn-primary" href="{{ url_for('review', review_id=review._id) }}">Read Reiew
                 <span class="glyphicon glyphicon-chevron-right"></span>
