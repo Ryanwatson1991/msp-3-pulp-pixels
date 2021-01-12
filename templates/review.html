@@ -17,9 +17,9 @@
         <div class="col-md-6 review-info">
             <hr>
             <!-- Date/Time -->
-            <p>Posted on January 1, 2017 at 12:00 PM</p> <!--Get datetime stuff setup-->
-            <p>Review by {{ review.user_name }}</p>
-            <p>Genre: {{ review.genre_name }}</p>
+            <p>Posted on | {{ review.date_posted.strftime('%B %-d, %Y') }}</p> <!--Get datetime stuff setup-->
+            <p>Review by | {{ review.user_name }}</p>
+            <p>Genre | {{ review.genre_name }}</p>
             <hr>
             <!--<p>BUY BOOK HERE: {{ review.purchase_link }}/{{ review.book_title.strip()|lower|truncate(100) }}<br></p>-->
             {% if session.user|lower == review.user_name|lower %}

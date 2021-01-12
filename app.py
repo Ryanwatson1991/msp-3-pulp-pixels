@@ -3,6 +3,7 @@ from flask import (
     Flask, flash, render_template, 
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
+from datetime import datetime
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
@@ -143,7 +144,8 @@ def write_review():
             "review_body": request.form.get("review_body"),
             "purchase_link": "www.ryansgoodbookshop.com",
             "user_name": session["user"],
-            "book_cover": request.form.get("book_cover")
+            "book_cover": request.form.get("book_cover"),
+            "date_posted": datetime.now()
         }
         mongo.db.reviews.insert_one(review)
         flash("Review Uploaded")
@@ -163,7 +165,7 @@ def edit_review(review_id):
             "review_body": request.form.get("review_body"),
             "purchase_link": "www.ryansgoodbookshop.com",
             "user_name": session["user"],
-            "book_cover": request.form.get("book_cover")
+            "book_cover": request.form.get("book_cover"),
         }
         mongo.db.reviews.update({"_id": ObjectId(review_id)}, edit)
         return redirect(url_for('review', review_id=review_id))
