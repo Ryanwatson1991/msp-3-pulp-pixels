@@ -1,37 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+    <hr>
     <div class="row">
-        <div class="col-lg-5">
-            <img class="img-fluid rounded mb-4" src="http://placehold.it/750x450" alt="">
-        </div>
-        <div class="col-lg-7">
-            <h2 class="center-text">{{ username }}'s profile</h2>
-            <p class="center-text">About {{ username }}: {{ bio }}</p>
-            <p class="center-text">Contact {{ username }}: {{ email }}</p>
+        <div class="col-12 mt-5 mb-5">
+            <h1 class="center-text title">Reviews by {{ username|capitalize }}</h1>
         </div>
     </div>
     <hr>
     <div class="row">
         {% for review in reviews %}
-        <div class="col-12 mb-5 mt-3">
-            <h2 class="center-text">Reviews by {{ username }}</h2>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-2"></div>
+        <div class="col-md-2 mb-5">
             <a href="{{ url_for('review', review_id=review._id) }}">
-                <img class="img-fluid rounded mb-3 mb-md-0" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
+                <img class="img-fluid rounded mb-3 mb-md-0 profile-book-cover" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
             </a>
         </div>
         <div class="col-md-8">
-            <a href="{{ url_for('review', review_id=review._id) }}">
+            <a href="{{ url_for('review', review_id=review._id) }}" class="review-title">
                 <h3>{{ review.book_title }} by {{ review.author }}</h3>
             </a>
             <p>{{ review.review_body | truncate(100) }}</p>
-            <a class="btn btn-primary" href="{{ url_for('review', review_id=review._id) }}">Read Reiew
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
-            <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn btn-primary">Edit Review</a>
-            <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete Review</a>
+            <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
+            <button class="btn red-button" id="delete-2">Delete Review</button>
+                <div id="review-delete-check">
+                    <p>Are you sure you want to delete this review? There is no way to undo this.</p>
+                    <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn red-button" id="yes-2">Yes</a>
+                    <button class="btn review-purple-button" id="no-2">No</button>
+                </div>
         </div>
         {% endfor %}
     </div>

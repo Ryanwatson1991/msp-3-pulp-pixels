@@ -3,27 +3,34 @@
 
  <!-- Page Content -->
 <div class="container mb-5 mt-3">
-    <h2 class="center-text mb-3">Edit Review</h2>
+    <div class="col-12 mt-5 mb-5">
+        <h1 class="center-text title">Edit Review</h1>
+    </div>
     <div class="row">
             <div class="col-12">
-                <div class="card w-100 h-100">
+                <div class="card w-100 h-100 review-info">
                         
-                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action="{{ url_for('edit_review', review_id=review._id) }}">
+                    <form class="mr-3 mr-md-5 mt-4" method="POST" action="{{ url_for('edit_review', review_id=review._id) }}">
                         <!--Book Title-->
                             <div class="mb-3">
-                                <label for="book_title" class="form-label">Book title</label>
+                                <h4>
+                                    <label for="book_title" class="form-label">Book title</label>
+                                </h4>
                                 <input type="text" value="{{ review.book_title }}" class="form-control form-control-lg" name="book_title" id="book_title" placeholder="Which book are you reviewing?" required>
                             </div>
                         <!--Author of book-->
                             <div class="mb-3">
-                                <label for="author" class="form-label">Author</label>
+                                <h4>  
+                                    <label for="author" class="form-label">Author</label>
+                                </h4>  
                                 <input type="text" value="{{ review.author }}" class="form-control form-control-lg" name="author" id="author" placeholder="Who wrote it?" required>
                             </div>
                         <!--Genre Name-->
                             <div class="mb-3">
-                                <label for="genre_name" class="form-label">Genre</label>
-                                <br>
-                                <select class="form-select form-select-lg mb-3" name="genre_name" id="genre_name" aria-label="genre_name">
+                                <h4>
+                                    <label for="genre_name" class="form-label">Genre</label>
+                                </h4>
+                                <select class="form-select form-select-lg form-control mb-3" name="genre_name" id="genre_name" aria-label="genre_name">
                                     <option selected disabled>Pick a Genre</option>
                                     {% for genres in genre %}
                                         {% if genres.genre_name == review.genre_name %}
@@ -36,7 +43,9 @@
                             </div>
                         <!-- Upload book image - need to work out how to do this-->
                             <div class="mb-3">
-                                <label for="book_cover" class="form-label">Upload Image</label>
+                                <h4>
+                                    <label for="book_cover" class="form-label">Upload Image</label>
+                                </h4>
                                 <input class="form-control form-control-lg" value="{{ review.book_cover }}" id="book_cover" name="book_cover" type="text">
                             </div>
                         <!--Review body-->
@@ -46,8 +55,8 @@
                                     {{- review.review_body -}} 
                                 </textarea>
                             </div>
-                            <a href="{{ url_for('get_index') }}" class="btn btn-danger">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Edit Review</button> 
+                            <a href="{{ url_for('get_index') }}" class="btn red-button">Cancel</a>
+                            <button type="submit" class="btn review-purple-button">Edit Review</button> 
                                 <div>
                                     {% with messages = get_flashed_messages() %}
                                         {% if messages %}

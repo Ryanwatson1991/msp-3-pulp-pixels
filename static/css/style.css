@@ -106,7 +106,7 @@ body {
 }
 
 /* Review Page Content */
-.review-title-header{
+.title{
     color: #A69480;
 }
 
@@ -156,4 +156,14 @@ body {
 .comment-head {
     background: #8C325E;
     color:#D9C2A7;
+}
+
+/* Profile Page */
+
+.profile-book-cover{
+    max-height: 100%;
+}
+
+.title{
+    color: #A69480;
 }

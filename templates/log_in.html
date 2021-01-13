@@ -7,8 +7,8 @@
       <div class="carousel-inner" role="listbox">
         <!-- Slide One - Set the background image for this slide in the line below -->
         <div class="carousel-item active" style="background-image: url('/static/img/head1.2.jpg')">
-          <div class="carousel-caption d-none d-md-block">
-            <h2 class="center-text mb-3">Welcome back. Please log in below. </h2>
+          <div class="carousel-caption d-block">
+            <h2 class="center-text mb-2">Welcome back. Please log in below. </h2>
           </div>
         </div>
     </div>
@@ -19,9 +19,9 @@
     
     <div class="row">
             <div class="col-12">
-                <div class="card w-100 h-100">
+                <div class="card w-100 h-100 review-info">
                     <!--Log in form-->
-                    <form class="ml-5 mr-5 mt-3 mb-3" method="POST" action="{{ url_for('log_in') }}">
+                    <form class="mr-5 mt-3" method="POST" action="{{ url_for('log_in') }}">
                         <!--Username Field-->
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
@@ -33,7 +33,7 @@
                             <input type="password" name="password" class="form-control" id="password" minlength="5" required>
                         </div>
                         <!--Submit button-->
-                        <button type="submit" class="btn btn-primary">Log in</button>
+                        <button type="submit" class="btn review-purple-button">Log in</button>
                         <div class="m-3 red">
                             {% with messages = get_flashed_messages() %}
                                 {% if messages %}
