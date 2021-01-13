@@ -177,6 +177,12 @@ body {
     color:#D9C2A7;
 }
 
+.no-image {
+    padding-top: 22%;
+    background: #8C325E;
+    padding-bottom: 22%;
+}
+
 /* Profile Page */
 
 .profile-book-cover{
