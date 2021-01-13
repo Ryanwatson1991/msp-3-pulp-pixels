@@ -87,6 +87,7 @@
                         <h5 class="mt-0">{{ comment.user_name }}</h5>
                         {{comment.comment_body}}    
                     </div>
+                    <a href="{{ url_for('delete_comment', review_id=review._id) }}" class="btn red-button">Yes</a>
                 </div>
                 <hr>
                 {% endfor %}

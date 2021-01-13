@@ -193,7 +193,7 @@ def comment(review_id):
         }
         mongo.db.comments.insert_one(comment)
         flash("Comment Uploaded")
-    return redirect(url_for('review', review_id=review_id))    
+    return redirect(url_for('review', review_id=review_id))
 
 
 if __name__ == "__main__":
