@@ -114,6 +114,25 @@ body {
     max-height: 25rem;
 }
 
+@media only screen and (max-width: 768px){
+.book-cover{
+    padding-left: 10%;
+}
+}
+
+@media only screen and (max-width: 768px){
+.book-cover {
+    padding-left: 3%;
+}
+}
+
+@media only screen and (max-width: 768px){
+.comments-sm {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+}
+
 .review-info{
     font-weight: bold;
     font-size: 1.3rem;
@@ -167,3 +186,4 @@ body {
 .title{
     color: #A69480;
 }
+
