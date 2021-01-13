@@ -2,18 +2,18 @@
 {% block content %}
 
 <!-- Header -->
-<header class="mb-5">
+<header class="mb-3">
     <div>
-      <div class="carousel-inner" role="listbox">
+      <div class="carousel-inner">
         <!-- Slide One - Set the background image for this slide in the line below -->
         <div class="carousel-item active" style="background-image: url('/static/img/head1.2.jpg')">
-          <div class="carousel-caption d-block">
-            <div class="jumbotron">
+            <div class="overlay"></div>
+            <div class="carousel-caption d-block lead">
                     <h3 class="header-title">Welcome to Pages and Pixels!</h3>
-                    <p class="header-text">A world for book-lovers where you can read reviews, write reviews and discuss your favourite books.</p>
+                    <p class="header-text">A world for book-lovers review & discuss to discuss your favourite books.</p>
+                    <p class="d-sm-none"></p>
                     <a href="{{ url_for('sign_up') }}" class="btn btn-primary purple-button">Sign-up</a>
-            </div>>
-          </div>
+            </div>
         </div>
     </div>
 </header>
@@ -27,7 +27,7 @@
         <div class="col-1"><!--Empty col for spacing--></div>
         <div class="col-10">
             <form action="{{ url_for('search') }}" method="POST">
-                    <input class="form-control form-control-lg" id="query" name="query" type="text" placeholder="Search Reviews - Type in a book name, author, genre or user">
+                <input class="form-control form-control-lg" id="query" name="query" type="text" placeholder="Search Reviews - Type in a book name, author, genre or user">
                 <button type="submit" class="btn btn-primary review-purple-button mt-2">Search</button> 
             </form>
         </div>

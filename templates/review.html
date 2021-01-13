@@ -12,7 +12,11 @@
       <!-- Post Content Column -->
         <div class="col-md-4">
             <!-- Image -->
-            <img class="img-fluid rounded book-cover" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
+             {% if review.book_cover %}
+                <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}"></a>
+            {% else %}
+                <img class="card-img-top no-image" src="/static/img/pplogo.jpg" alt="Pages & Pixels"></a>
+            {% endif %}
         </div>
         <div class="col-md-6 review-info">
             <hr>
