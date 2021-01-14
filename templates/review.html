@@ -28,11 +28,26 @@
             <!--<p>BUY BOOK HERE: {{ review.purchase_link }}/{{ review.book_title.strip()|lower|truncate(100) }}<br></p>-->
             {% if session.user|lower == review.user_name|lower %}
                 <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
-                <button class="btn red-button" id="delete">Delete Review</button>
-                <div id="sure">
-                    <p>Are you sure you want to delete this review? There is no way to undo this.</p>
-                    <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn red-button" id="yes">Yes</a>
-                    <button class="btn review-purple-button" id="no">No</button>
+                <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete Review</button>
+
+                <div class="modal fade" id="delete-{{ review._id }}" tabindex="-1" aria-labelledby="confirmDelete" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content header-text modal-bg">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDelete">Are you sure you want to delete this review? </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                There is no way to undo this. 
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn red-button">Yes</a>
+                                <button class="btn review-purple-button" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             {% endif %} 
         </div>
