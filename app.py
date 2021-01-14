@@ -225,7 +225,7 @@ def delete_review(review_id):
     """
     mongo.db.reviews.remove({"_id": ObjectId(review_id)})
     flash("Review Deleted")
-    return redirect(url_for("get_index"))
+    return redirect(url_for('profile', username=session['user']))
 
 
 @app.route("/comment/<review_id>", methods=["GET", "POST"])
@@ -233,7 +233,10 @@ def comment(review_id):
     """
     This route saves comments to db, it also saves the mongo _id 
     of the review page comment is posted on so that when comments 
-    are displayed app can identify which page to display it on
+    are displayed app can identify which page to display it on.
+    
+    I did struggle with this one a bit but found a solution in code institute 
+    where someone was trying to do something similar
     """
     if request.method == "POST":
         discussion_id = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})

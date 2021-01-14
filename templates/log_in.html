@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!--Header-->
+<!-- Header (Was previously a Carousel of three images but this changed during development, have still kept the carousel classes for styling)-->
 <header class="mb-5">
     <div>
         <div class="carousel-inner">
-            <!-- Slide One - Set the background image for this slide in the line below -->
             <div class="carousel-item active" style="background-image: url('/static/img/head4.jpg')">
                 <div class="overlay"></div>
                 <div class="carousel-caption d-block lead">
@@ -18,7 +17,6 @@
 
  <!-- Page Content -->
 <div class="container mb-5 mt-3">
-    
     <div class="row">
             <div class="col-12">
                 <div class="card w-100 h-100 review-info">
@@ -31,7 +29,7 @@
                         </div>
                         <!--Password Field-->
                         <div class="mb-3">
-                            <label for="password" class="form-label" required>Password</label>
+                            <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" id="password" minlength="5" required>
                         </div>
                         <!--Submit button-->
@@ -48,7 +46,6 @@
                     </form>
                 </div>
             </div>
-        
     </div>
 </div>
 

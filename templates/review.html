@@ -2,121 +2,121 @@
 {% block content %}
 
 <div class="container mt-4">
-<div class="col-12">
-<div class="row">
-    <!-- Page Heading/Breadcrumbs -->
-    <h1 class="mt-2 mb-4 title"> 
-        {{ review.book_title }} by {{ review.author }}
-    </h1>    
-    <div class="row">
-      <!-- Post Content Column -->
-        <div class="col-md-4">
-            <!-- Image -->
-            {% if review.book_cover %}
-                <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}"></a>
-            {% else %}
-                <img class="card-img-top no-image" src="{{ url_for('static', filename='img/pplogo-crop.jpg') }}" alt="Pages & Pixels"></a>
-            {% endif %}
-        </div>
-        <div class="col-md-6 review-info">
-            <hr>
-            <!-- Date/Time -->
-            <p>Posted on | {{ review.date_posted.strftime('%B %-d, %Y') }}</p> <!--Get datetime stuff setup-->
-            <p>Review by | {{ review.user_name }}</p>
-            <p>Genre | {{ review.genre_name }}</p>
-            <hr>
-            <a href="https://www.amazon.com/s?tag=faketag&k={{ review.book_title | lower | replace (' ', '+') }}" target="_blank" class="buy">Buy book here</a>
-            <hr>
-            {% if session.user|lower == review.user_name|lower %}
-                <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
-                <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete Review</button>
+    <div class="col-12">
+        <div class="row">
+            <!-- Page Heading-->
+            <h1 class="mt-2 mb-4 title"> 
+                {{ review.book_title }} by {{ review.author }}
+            </h1>    
+            <div class="row">
+            <!-- Post Content Column -->
+                <div class="col-md-4">
+                    <!-- Image if loop displays uploaded book image if there is one, if not it displays site logo as generic image-->
+                    {% if review.book_cover %}
+                        <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
+                    {% else %}
+                        <img class="card-img-top no-image" src="{{ url_for('static', filename='img/pplogo-crop.jpg') }}" alt="Pages & Pixels">
+                    {% endif %}
+                </div>
+                <div class="col-md-6 review-info">
+                    <hr>
+                    <!-- Review info -->
+                    <p>Posted on | {{ review.date_posted.strftime('%B %-d, %Y') }}</p>
+                    <p>Review by | {{ review.user_name | capitalize }}</p>
+                    <p>Genre | {{ review.genre_name }}</p>
+                    <hr>
+                    <a href="https://www.amazon.com/s?tag=faketag&k={{ review.book_title | lower | replace (' ', '+') }}" target="_blank" class="buy">
+                        <!--Pretend Amazon affiliate link - it just leads to the search results for the book on amazon-->
+                        Buy book here</a>
+                    <hr>
+                    {% if session.user|lower == review.user_name|lower %}
+                    <!--If the review was written by the logged in user, the following options are displayed (Edit or delete review)-->
+                        <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
+                        <!--Below button opens a modal that targets review by _id in mongo, had issues getting it to delete correct review, 
+                            but through tutor support came to the below solution-->
+                        <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete Review</button>
 
-                <div class="modal fade" id="delete-{{ review._id }}" tabindex="-1" aria-labelledby="confirmDelete" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content header-text modal-bg">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="confirmDelete">Are you sure you want to delete this review? </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                There is no way to undo this. 
-                            </div>
-                            <div class="modal-footer">
-                                <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn red-button">Yes</a>
-                                <button class="btn review-purple-button" data-dismiss="modal">No</button>
+                        <!--Modal to allow user to confirm they want to delete their review - code taken from bootstrap sample modal-->
+                        <div class="modal fade" id="delete-{{ review._id }}" tabindex="-1" aria-labelledby="confirmDelete" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content header-text modal-bg">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDelete">Are you sure you want to delete this review? </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                                            <span aria-hidden="true">&times;</span>
+                                    </div>
+                                    <div class="modal-body">
+                                        There is no way to undo this. 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn red-button">Yes</a>
+                                        <button class="btn review-purple-button" data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %} 
                 </div>
-            {% endif %} 
-        </div>
-        <div class="col-12">
-            <hr>
-            <!-- Post Content -->
-            <div>
-                {{ review.review_body }}
-
-            </div>
-
-            <hr>
-
-            <!-- Comments Form -->
-            <div class="col-md-10 comments-sm">
-                {% if session.user %}
-                <!--Allow user to submit comments if they're logged in-->
-                <div class="card my-4">
-                    <h5 class="card-header comment-head">Leave a Comment:</h5>
-                    <div class="card-body">
-                        <form method="POST" action="{{ url_for('comment', review_id=review._id) }}">
-                        <div class="form-group">
-                            <textarea class="form-control" id="comment_body" name="comment_body" rows="3"></textarea>
+                <div class="col-12">
+                    <hr>
+                    <!-- Post Content - review body -->
+                    <div>
+                        {{ review.review_body }}
+                    </div>
+                    <hr>
+                    <!-- Comments Form -->
+                    <div class="col-md-10 comments-sm">
+                        {% if session.user %}
+                        <!--Allow user to submit comments if they're logged in-->
+                        <div class="card my-4">
+                            <h5 class="card-header comment-head">Leave a Comment:</h5>
+                            <div class="card-body">
+                                <form method="POST" action="{{ url_for('comment', review_id=review._id) }}">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="comment_body" name="comment_body" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn review-purple-button">Submit</button>
+                                </form>
+                                    {% with messages = get_flashed_messages() %}
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                <p class="m-3 red">{{ message }}</p>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endwith %}
+                            </div>
                         </div>
-                        <button type="submit" class="btn review-purple-button">Submit</button>
-                        </form>
-                            {% with messages = get_flashed_messages() %}
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <p class="m-3 red">{{ message }}</p>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endwith %}
-                    </div>
-                </div>
-                {% else %}
-                <!--Give user the option to log in if they aren't already-->
-                <div class="card my-4">
-                <h5 class="card-header comment-head">Leave a Comment:</h5>
-                <div class="card-body">
-                    <p>You have to be logged in to leave a comment</p>
-                    <a href="{{ url_for('log_in') }}" class="btn review-purple-button">Log in?</a>
-                </div>
-                </div>
-                {% endif %}
+                        {% else %}
+                        <!--Give user the option to log in if they aren't already-->
+                        <div class="card my-4">
+                        <h5 class="card-header comment-head">Leave a Comment:</h5>
+                        <div class="card-body">
+                            <p>You have to be logged in to leave a comment</p>
+                            <a href="{{ url_for('log_in') }}" class="btn review-purple-button">Log in?</a>
+                        </div>
+                        </div>
+                        {% endif %}
 
-                <!--Comments-->
-                {% for comment in comments %}
-                <div class="media mb-4">
-                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                    <div class="media-body">
-                        <h5 class="mt-0">{{ comment.user_name }}</h5>
-                        {{comment.comment_body}}    
+                        <!--Previously posted Comments-->
+                        <h5 class="title">User Comments</h5>
+                        <hr>
+                        {% for comment in comments %}
+                        <!--Display comments posted to this review-->
+                        <div class="media mb-4">
+                            <div class="col-1"></div>
+                            <div class="media-body">
+                                <h5 class="mt-0 commenter-info">{{ comment.user_name | capitalize }}</h5>
+                                {{comment.comment_body}}    
+                            </div>
+                        </div>
+                        <hr>
+                        {% endfor %}
                     </div>
-                    <a href="{{ url_for('delete_comment', review_id=review._id) }}" class="btn red-button">Yes</a>
                 </div>
-                <hr>
-                {% endfor %}
             </div>
-                            
-            
         </div>
     </div>
 </div>
-</div>
-</div>
-
-
 
 {% endblock %}
 

@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Header -->
+<!-- Header (Was previously a Carousel of three images but this changed during development, have still kept the carousel classes for styling)-->
 <header class="mb-3">
-    <div>
-      <div class="carousel-inner">
-        <!-- Slide One - Set the background image for this slide in the line below -->
+    <div class="carousel-inner">
         <div class="carousel-item active" style="background-image: url('/static/img/head1.2.jpg')">
             <div class="overlay"></div>
             <div class="carousel-caption d-block lead">
@@ -23,14 +21,12 @@
     </div>
 </header>
 
-
-  
-
- <!-- Page Content -->
+<!-- Page Content -->
 <div class="container">
     <div class="row">
         <div class="col-1"><!--Empty col for spacing--></div>
         <div class="col-10">
+            <!--Search bar, allows user to search through posted reviews-->
             <form action="{{ url_for('search') }}" method="POST">
                 <input class="form-control form-control-lg mt-2" id="query" name="query" type="text" placeholder="Search Reviews - Type in a book name, author, genre or user">
                 <button type="submit" class="btn btn-primary search-purple-button mt-2">Search Reviews</button>
@@ -42,27 +38,28 @@
     </div>
     <div class="row">
         
-        {% for review in reviews %}
-            <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card h-100">
-                    <a href="{{ url_for('review', review_id=review._id) }}">
-                        {% if review.book_cover %}
-                            <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}"></a>
-                        {% else %}
-                            <img class="card-img-top no-image" src="/static/img/pplogo.jpg" alt="Pages & Pixels"></a>
-                        {% endif %}
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="{{ url_for('review', review_id=review._id) }}" class="review-title">{{ review.book_title }} by {{ review.author }}</a>
-                        </h4>
-                        <p class="card-text">{{ review.review_body | truncate(100) }}</p>
-                        <!--Found 'truncate' function here: https://stackoverflow.com/questions/33627646/python-flask-template-return-first-150-characters-->
-                    </div>
+    {% for review in reviews %}
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="{{ url_for('review', review_id=review._id) }}">
+                    <!--If loop displays uploaded book image if there is one, if not it displays site logo as generic image-->
+                    {% if review.book_cover %}
+                        <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
+                    {% else %}
+                        <img class="card-img-top no-image" src="/static/img/pplogo.jpg" alt="Pages & Pixels">
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="{{ url_for('review', review_id=review._id) }}" class="review-title">{{ review.book_title }} by
+                            {{ review.author }}</a>
+                    </h4>
+                    <p class="card-text">{{ review.review_body | truncate(100) }}</p>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+    {% endfor %}
     </div>
-    <!-- /.row -->
 </div>
 
 {% endblock %}

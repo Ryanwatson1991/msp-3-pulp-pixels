@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
- <!-- Page Content -->
+<!-- Page Content -->
 <div class="container mb-5 mt-3">
     <div class="row">
             <div class="col-12 mt-5 mb-5">
@@ -9,62 +9,61 @@
             </div>
     </div>
     <div class="row">
-            <div class="col-12">
-                <div class="card w-100 h-100 review-info">
-                    <form class="mr-3 mr-md-5 mt-4" method="POST" action="{{ url_for('write_review') }}">
-                        
-                        <!--Book Title-->
-                            <div class="mb-3">
-                                <h4>
-                                    <label for="book_title" class="form-label">Book title</label>
-                                </h4>
-                                <input type="text" class="form-control form-control-lg" name="book_title" id="book_title" placeholder="Which book are you reviewing?" required>
-                            </div>
-                        <!--Author of book-->
-                            <div class="mb-3">
-                                <h4>
-                                    <label for="author" class="form-label">Author</label>
-                                </h4>
-                                <input type="text" class="form-control form-control-lg" name="author" id="author" placeholder="Who wrote it?" required>
-                            </div>
-                        <!--Genre Name-->
-                            <div class="mb-3">
-                                <h4>
-                                    <label for="genre_name" class="form-label">Genre</label>
-                                </h4>
-                                <select class="form-select form-select-lg form-control mb-3" name="genre_name" id="genre_name" aria-label="genre_name">
-                                    <option selected disabled>Pick a Genre</option>
-                                    {% for genres in genre %}
-                                    <option value="{{ genres.genre_name }}">{{ genres.genre_name }}</option>
-                                    {% endfor %}}
-                                </select>
-                            </div>
-                        <!-- Upload book image - need to work out how to do this -->
-                            <div class="mb-3">
-                                <h4>
-                                    <label for="book_cover" class="form-label">Image Link</label>
-                                </h4>
-                                <input class="form-control form-control-lg" id="book_cover" name="book_cover" type="text" placeholder="Copy a link to an image of the book's cover">
-                            </div>
-                        <!--Review body-->
-                            <div class="mb-3">
-                                <h4>
-                                    <label for="review_body" class="form-label">Review:</label>
-                                </h4>
-                                <textarea class="form-control" name="review_body" id="review_body" rows="20" placeholder="Okay, now's your chance to get writing!" required></textarea>
-                            </div>
-                            <button type="submit" class="btn review-purple-button">Upload Review</button> 
-                                {% with messages = get_flashed_messages() %}
-                                    {% if messages %}
-                                        {% for message in messages %}
-                                            <p>{{ message }}</p>
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endwith %}
-                    </form>
-                </div>
+        <div class="col-12">
+            <div class="card w-100 h-100 review-info">
+                <!--Form for submitting details of review-->
+                <form class="mr-3 mr-md-5 mt-4" method="POST" action="{{ url_for('write_review') }}">  
+                    <!--Book Title-->
+                    <div class="mb-3">
+                        <h4>
+                            <label for="book_title" class="form-label">Book title</label>
+                        </h4>
+                        <input type="text" class="form-control form-control-lg" name="book_title" id="book_title" placeholder="Which book are you reviewing?" required>
+                    </div>
+                    <!--Author of book-->
+                    <div class="mb-3">
+                        <h4>
+                            <label for="author" class="form-label">Author</label>
+                        </h4>
+                        <input type="text" class="form-control form-control-lg" name="author" id="author" placeholder="Who wrote it?" required>
+                    </div>
+                    <!--Genre Name-->
+                    <div class="mb-3">
+                        <h4>
+                            <label for="genre_name" class="form-label">Genre</label>
+                        </h4>
+                        <select class="form-select form-select-lg form-control mb-3" name="genre_name" id="genre_name" aria-label="genre_name">
+                            <option selected disabled>Pick a Genre</option>
+                            {% for genres in genre %}
+                                <option value="{{ genres.genre_name }}">{{ genres.genre_name }}</option>
+                            {% endfor %}}
+                        </select>
+                    </div>
+                    <!-- URL link to book cover  -->
+                    <div class="mb-3">
+                        <h4>
+                            <label for="book_cover" class="form-label">Image Link</label>
+                        </h4>
+                        <input class="form-control form-control-lg" id="book_cover" name="book_cover" type="text" placeholder="Copy a link to an image of the book's cover">
+                    </div>
+                    <!--Review body-->
+                    <div class="mb-3">
+                        <h4>
+                            <label for="review_body" class="form-label">Review:</label>
+                        </h4>
+                        <textarea class="form-control" name="review_body" id="review_body" rows="20" placeholder="Okay, now's your chance to get writing!" required></textarea>
+                    </div>
+                    <button type="submit" class="btn review-purple-button">Upload Review</button> 
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <p>{{ message }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                </form>
             </div>
-        
+        </div>
     </div>
 </div>
 

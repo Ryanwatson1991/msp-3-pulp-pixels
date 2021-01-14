@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+
+<!--Profile page for logged in user - displays reviews written by logged in user-->
 <div class="container">
     <hr>
     <div class="row">
@@ -9,25 +11,23 @@
     </div>
     <hr>
     <div class="row">
-
         <div class="col-12 write_edit">
             <a href="{{ url_for('write_review') }}" class="btn purple-button">Write Review</a>
             <a href="{{ url_for('get_index') }}" class="btn purple-button">Browse</a>
         </div>
-
     </div>
     <hr>
-
     <div class="row">
-           
+        <!--Iterates over reviews in database to display all reviews posted by user-->   
         {% for review in reviews %}
-            <div class="col-md-2"></div>
+            <div class="col-md-2"><!--Empty col for spacing--></div>
             <div class="col-md-2 mb-5">
                 <a href="{{ url_for('review', review_id=review._id) }}">
+                    <!--If loop displays uploaded book image if there is one, if not it displays site logo as generic image-->
                     {% if review.book_cover %}
-                        <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}"></a>
+                        <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
                     {% else %}
-                        <img class="card-img-top no-image" src="{{ url_for('static', filename='img/pplogo-crop.jpg') }}" alt="Pages & Pixels"></a>
+                        <img class="card-img-top no-image" src="{{ url_for('static', filename='img/pplogo-crop.jpg') }}" alt="Pages & Pixels Logo">
                     {% endif %}
                 </a>
             </div>
@@ -37,18 +37,19 @@
                 </a>
                 <p>{{ review.review_body | truncate(100) }}</p>
                 <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
-                <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete
-                    Review</button>
+                <!--Below button opens a modal that targets review by _id in mongo, had issues getting it to delete correct review, 
+                    but through tutor support came to the below solution-->
+                <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete Review</button>
             </div>
-            
+        
+            <!--Modal to allow user to confirm they want to delete their review - code taken from bootstrap sample modal-->
             <div class="modal fade" id="delete-{{ review._id }}" tabindex="-1" aria-labelledby="confirmDelete" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content header-text modal-bg">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDelete">Are you sure you want to delete this review? </h5>
+                            <h5 class="modal-title" id="confirmDelete">Are you sure you want to delete this review?</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
                             <span aria-hidden="true">&times;</span>
-                            </button>
                         </div>
                         <div class="modal-body">
                             There is no way to undo this.
@@ -63,9 +64,5 @@
         {% endfor %}
     </div>
 </div>
-
-
- <!-- Page Content -->
-
 
 {% endblock %}

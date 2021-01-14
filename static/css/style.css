@@ -105,7 +105,6 @@ body {
 }
 }
 
-
 /*Navbar*/
 
 .purple {
@@ -243,6 +242,12 @@ body {
     font-weight: bold;
     font-size: 1.3rem;
     padding-left: 5%;
+    color: #A69480;
+}
+
+.commenter-info{
+    font-weight: bold;
+    font-size: 1.3rem;
     color: #A69480;
 }
 
