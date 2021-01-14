@@ -28,6 +28,7 @@
                         <!--Username Field-->
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
+                            <p class="un-info">Username must be between 5-20 characters long and can't include special characters.</p>
                             <input id="username" name="username" type="text" class="form-control" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5,20}$" required>                        
                         </div>
                         <!--Email Field-->
@@ -38,7 +39,7 @@
                         <!--Password Field-->
                         <div class="mb-3">
                             <label for="password" class="form-label" required>Password</label>
-                            <input type="password" name="password" class="form-control" id="password" minlength="5" required>
+                            <input type="password" name="password" class="form-control" id="password" minlength="5" data-toggle="tooltip" title="Password must be at least 5 characters long" required>
                         </div>
                         <!--Submit button-->
                         <button type="submit" class="btn review-purple-button">Sign-up</button>

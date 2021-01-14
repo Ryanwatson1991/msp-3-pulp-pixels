@@ -31,8 +31,12 @@ def get_index():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
+    """
+    This route allows user to search reviews
+    """
     query = request.form.get("query")
-    reviews = mongo.db.reviews.find({"$text": {"$search": query}}).sort("_id", -1)
+    reviews = mongo.db.reviews.find(
+        {"$text": {"$search": query}}).sort("_id", -1)
     return render_template("index.html", reviews=reviews)
 
 
@@ -46,6 +50,7 @@ def sign_up():
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
+        # check if email already exists in db
         existing_email = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
 
@@ -68,18 +73,22 @@ def sign_up():
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
         return redirect(url_for("profile", username=session["user"]))
+
     return render_template("sign_up.html")
 
 
 @app.route("/log_in", methods=["GET", "POST"])
 def log_in():
+    """
+    This route allows user to log in to website
+    """
     if request.method == "POST":
-        # check if username already exists in db
+        # check if username exists in db
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
         if existing_user: 
-            # Check hashed password
+            # Check hashed password matches up to username in db
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
                     session["user"] = request.form.get("username").lower()
@@ -101,24 +110,34 @@ def log_in():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username): 
+    """
+    This route takes user to profile page 
+    that shows their name and the reviews they have written
+    """
     # get session user's username from database
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+
     # Get session user's reviews
     current_user = session["user"]
     reviews = mongo.db.reviews.find({"user_name": current_user})
-    
+
     user_details = mongo.db.users.find_one(current_user)
 
     if session["user"]:
         return render_template(
-            "profile.html", username=username, user_details=user_details, reviews=reviews)
+            "profile.html", username=username, 
+            user_details=user_details, reviews=reviews)
 
     return redirect(url_for("log_in"))
 
 
 @app.route("/log_out")
 def log_out():
+    """
+    This route logs user out of website by removing 
+    their info from 'session' cookie
+    """
     # remove user from session cookies
     flash("you have been logged out")
     session.pop("user")
@@ -127,49 +146,73 @@ def log_out():
 
 @app.route("/review/<review_id>")
 def review(review_id):
+    """
+    This route takes user to a review page based 
+    on the _id saved to mongodb for the selected review. 
+    Reviews are selected from either index or profile page.
+    It also allows comments to display on the reviews page 
+    by matching comments saved in comments db to the _id 
+    for the review page they were posted on.
+    """
+    # Gets review based on which review was selected on index or profile page
     review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+    '''stripped = ''.join(c for c in review['book_title'] if c.isalnum())
+    review['stripped_title'] = stripped '''
+    
+    # Gets comments based on which review_id was saved 
+    # into db for comment when it was posted (see /comment for further details)
     comments = mongo.db.comments.find({"book_id": ObjectId(review_id)})
     return render_template("review.html", review=review, comments=comments)
-
-    # found solution for this^^^^ here https://github.com/PrettyPrinted/flask_blog/blob/master/app.py
 
 
 @app.route("/write_review", methods=["GET", "POST"])
 def write_review():
+    """ 
+    This route allows user to add a review to database to then be 
+    displayed on index, profile & review pages.
+    """
     if request.method == "POST":
+        # Dictionary determining what information is added 
+        # when user submits a review 
         review = {
             "book_title": request.form.get("book_title"),
             "author": request.form.get("author"),
             "genre_name": request.form.get("genre_name"),
             "review_body": request.form.get("review_body"),
-            "purchase_link": "www.ryansgoodbookshop.com",
             "user_name": session["user"],
             "book_cover": request.form.get("book_cover"),
             "date_posted": datetime.now()
         }
+        # Inserts Review
         mongo.db.reviews.insert_one(review)
         flash("Review Uploaded")
         return redirect(url_for("get_index"))
 
+    # Allows genre db to be displayed in write_review form
     genre = mongo.db.genre.find().sort("genre_name", 1)
     return render_template("write_review.html", genre=genre)
 
 
 @app.route("/edit_review/<review_id>", methods=["GET", "POST"])
 def edit_review(review_id):
+    """
+    This route allows logged in user to edit reviews they have posted
+    """ 
     if request.method == "POST":
+        # Dictionary determining what information is to be edited
         edit = {
             "book_title": request.form.get("book_title"),
             "author": request.form.get("author"),
             "genre_name": request.form.get("genre_name"),
             "review_body": request.form.get("review_body"),
-            "purchase_link": "www.ryansgoodbookshop.com",
             "user_name": session["user"],
             "book_cover": request.form.get("book_cover"),
         }
+        # Sends review edits to db
         mongo.db.reviews.update({"_id": ObjectId(review_id)}, edit)
         return redirect(url_for('review', review_id=review_id))
 
+    # Tells app which review to edit
     review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
     genre = mongo.db.genre.find().sort("genre_name", 1)
     return render_template("edit_review.html", review=review, genre=genre)
@@ -177,6 +220,9 @@ def edit_review(review_id):
 
 @app.route("/delete_review/<review_id>")
 def delete_review(review_id):
+    """
+    This route deletes selected review
+    """
     mongo.db.reviews.remove({"_id": ObjectId(review_id)})
     flash("Review Deleted")
     return redirect(url_for("get_index"))
@@ -184,6 +230,11 @@ def delete_review(review_id):
 
 @app.route("/comment/<review_id>", methods=["GET", "POST"])
 def comment(review_id):
+    """
+    This route saves comments to db, it also saves the mongo _id 
+    of the review page comment is posted on so that when comments 
+    are displayed app can identify which page to display it on
+    """
     if request.method == "POST":
         discussion_id = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
         comment = {
@@ -198,5 +249,5 @@ def comment(review_id):
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
-        port=int(os.environ.get("PORT")), 
-        debug=True)
+            port=int(os.environ.get("PORT")), 
+            debug=True)

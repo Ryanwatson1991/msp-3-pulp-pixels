@@ -101,6 +101,16 @@ body {
     font-size: 1.2rem;
 }
 
+.buy {
+    color:#D9C2A7;
+    font-weight: light;
+}
+
+.buy:hover {
+    color: #8C325E;
+    text-decoration: none;
+}
+
 @media only screen and (max-width: 360px){
 .header-text{
     display: none;
@@ -158,6 +168,26 @@ body {
 }
 }
 
+.search-clear-button {
+    border: none;
+    padding-left: 15px;
+    padding-top: 20px;
+    font-size: 0.8rem;
+    color: #D9C2A7;   
+}
+
+.search-clear-button:hover {
+    color: #8C325E;
+}
+
+@media only screen and (max-width: 1200px){
+.search-clear-button {
+    color: #D9C2A7; 
+    margin-left: 15%;
+    width: 70%;
+}
+}
+
 
 /* Review Page Content */
 .title{
@@ -191,7 +221,7 @@ body {
     font-weight: bold;
     font-size: 1.3rem;
     padding-left: 5%;
-    color: #A69480
+    color: #A69480;
 }
 
 .review-purple-button {
@@ -249,4 +279,16 @@ body {
 
 .modal-bg {
     background: #F2F2EB;
+}
+
+.write_edit {
+    text-align: center;
+}
+
+/* Log-in/sign up pages */
+
+.un-info {
+    font-size:1rem;
+    font-style: italic;
+    font-weight: lighter;
 }

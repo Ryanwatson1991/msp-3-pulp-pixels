@@ -12,10 +12,10 @@
       <!-- Post Content Column -->
         <div class="col-md-4">
             <!-- Image -->
-             {% if review.book_cover %}
+            {% if review.book_cover %}
                 <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}"></a>
             {% else %}
-                <img class="card-img-top no-image" src="/static/img/pplogo.jpg" alt="Pages & Pixels"></a>
+                <img class="card-img-top no-image" src="{{ url_for('static', filename='img/pplogo-crop.jpg') }}" alt="Pages & Pixels"></a>
             {% endif %}
         </div>
         <div class="col-md-6 review-info">
@@ -25,7 +25,8 @@
             <p>Review by | {{ review.user_name }}</p>
             <p>Genre | {{ review.genre_name }}</p>
             <hr>
-            <!--<p>BUY BOOK HERE: {{ review.purchase_link }}/{{ review.book_title.strip()|lower|truncate(100) }}<br></p>-->
+            <a href="https://www.amazon.com/s?tag=faketag&k={{ review.book_title | lower | replace (' ', '+') }}" target="_blank" class="buy">Buy book here</a>
+            <hr>
             {% if session.user|lower == review.user_name|lower %}
                 <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
                 <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete Review</button>

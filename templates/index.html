@@ -32,8 +32,9 @@
         <div class="col-1"><!--Empty col for spacing--></div>
         <div class="col-10">
             <form action="{{ url_for('search') }}" method="POST">
-                <input class="form-control form-control-lg" id="query" name="query" type="text" placeholder="Search Reviews - Type in a book name, author, genre or user">
-                <button type="submit" class="btn btn-primary search-purple-button mt-2">Search Reviews</button> 
+                <input class="form-control form-control-lg mt-2" id="query" name="query" type="text" placeholder="Search Reviews - Type in a book name, author, genre or user">
+                <button type="submit" class="btn btn-primary search-purple-button mt-2">Search Reviews</button>
+                <a href="{{ url_for('get_index') }}" class="btn search-clear-button">Clear Search</a>
             </form>
             <hr>
         </div>

@@ -9,42 +9,57 @@
     </div>
     <hr>
     <div class="row">
-        {% for review in reviews %}
-        <div class="col-md-2"></div>
-        <div class="col-md-2 mb-5">
-            <a href="{{ url_for('review', review_id=review._id) }}">
-                <img class="img-fluid rounded mb-3 mb-md-0 profile-book-cover" src="{{ review.book_cover }}" alt="{{ review.book_title }}">
-            </a>
-        </div>
-        <div class="col-md-8">
-            <a href="{{ url_for('review', review_id=review._id) }}" class="review-title">
-                <h3>{{ review.book_title }} by {{ review.author }}</h3>
-            </a>
-            <p>{{ review.review_body | truncate(100) }}</p>
-            <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
-            <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete Review</button>
+
+        <div class="col-12 write_edit">
+            <a href="{{ url_for('write_review') }}" class="btn purple-button">Write Review</a>
+            <a href="{{ url_for('get_index') }}" class="btn purple-button">Browse</a>
         </div>
 
-        <div class="modal fade" id="delete-{{ review._id }}" tabindex="-1" aria-labelledby="confirmDelete" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content header-text modal-bg">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDelete">Are you sure you want to delete this review? </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <hr>
+
+    <div class="row">
+           
+        {% for review in reviews %}
+            <div class="col-md-2"></div>
+            <div class="col-md-2 mb-5">
+                <a href="{{ url_for('review', review_id=review._id) }}">
+                    {% if review.book_cover %}
+                        <img class="card-img-top" src="{{ review.book_cover }}" alt="{{ review.book_title }}"></a>
+                    {% else %}
+                        <img class="card-img-top no-image" src="{{ url_for('static', filename='img/pplogo-crop.jpg') }}" alt="Pages & Pixels"></a>
+                    {% endif %}
+                </a>
+            </div>
+            <div class="col-md-8">
+                <a href="{{ url_for('review', review_id=review._id) }}" class="review-title">
+                    <h3>{{ review.book_title }} by {{ review.author }}</h3>
+                </a>
+                <p>{{ review.review_body | truncate(100) }}</p>
+                <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn review-purple-button">Edit Review</a>
+                <button type="button" class="btn red-button" data-toggle="modal" data-target="#delete-{{ review._id }}">Delete
+                    Review</button>
+            </div>
+            
+            <div class="modal fade" id="delete-{{ review._id }}" tabindex="-1" aria-labelledby="confirmDelete" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content header-text modal-bg">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDelete">Are you sure you want to delete this review? </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
                             <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        There is no way to undo this. 
-                    </div>
-                    <div class="modal-footer">
-                        <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn red-button">Yes</a>
-                        <button class="btn review-purple-button" data-dismiss="modal">No</button>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            There is no way to undo this.
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn red-button">Yes</a>
+                            <button class="btn review-purple-button" data-dismiss="modal">No</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
         {% endfor %}
     </div>
 </div>
