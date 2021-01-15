@@ -42,6 +42,12 @@ wanted to project a sense of community through this site. As a result, I also ma
 ### Images & colour
 Images were taken from [Shutterstock](https://www.shutterstock.com/g/Tithi+Luadthong) (I've accidentally signed for a year's subscription, so I'm trying to get my use out of it)
 The images played a big part in defining the look of the site - I picked three images that I wanted to convey a sense of imagination. 
+
+These images are as follows: 
+* [Image 1](static/img/head1.2.jpg)
+* [Image 2](static/img/head2.jpg)
+* [Image 3](static/img/head4.jpg)
+
 These images then helped steer the design of the rest of the site as the colours used site wide were picked based on colours that complimented those of the images. 
 
 (I also just really liked the images the user Tithi Luadthong had uploaded to Shutterstock)
@@ -52,9 +58,9 @@ As a result I used [canva.com](https://www.canva.com/create/logos/) to make a ba
 
 The logo is as folows: 
 
-![Logo] (/static/img/pplogo.jpg)
+![Logo](/static/img/pplogo-crop.jpg)
 
-
+This would also be useful as an alternate image if a user uploaded review didn't contain its own image. 
 
 ## Wireframes
 Pdf's of my initial wireframes are linked below: 
