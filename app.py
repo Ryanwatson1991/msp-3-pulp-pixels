@@ -1,6 +1,6 @@
 import os
 from flask import (
-    Flask, flash, render_template, 
+    Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from datetime import datetime
@@ -71,7 +71,6 @@ def sign_up():
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
-        flash("Registration Successful!")
         return redirect(url_for("profile", username=session["user"]))
 
     return render_template("sign_up.html")
@@ -87,13 +86,13 @@ def log_in():
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
-        if existing_user: 
+        if existing_user:
             # Check hashed password matches up to username in db
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    return redirect(url_for(
-                        "profile", username=session["user"]))
+                session["user"] = request.form.get("username").lower()
+                return redirect(url_for(
+                    "profile", username=session["user"]))
 
             else:
                 # invalid password
@@ -109,9 +108,9 @@ def log_in():
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
-def profile(username): 
+def profile(username):
     """
-    This route takes user to profile page 
+    This route takes user to profile page
     that shows their name and the reviews they have written
     """
     # get session user's username from database
@@ -121,13 +120,14 @@ def profile(username):
     # Get session user's reviews
     current_user = session["user"]
     reviews = mongo.db.reviews.find({"user_name": current_user})
+    review_count = reviews.count()
 
     user_details = mongo.db.users.find_one(current_user)
 
     if session["user"]:
         return render_template(
-            "profile.html", username=username, 
-            user_details=user_details, reviews=reviews)
+            "profile.html", username=username,
+            user_details=user_details, reviews=reviews, review_count=review_count)
 
     return redirect(url_for("log_in"))
 
@@ -135,11 +135,11 @@ def profile(username):
 @app.route("/log_out")
 def log_out():
     """
-    This route logs user out of website by removing 
+    This route logs user out of website by removing
     their info from 'session' cookie
     """
     # remove user from session cookies
-    flash("you have been logged out")
+    flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("log_in"))
 
@@ -147,19 +147,17 @@ def log_out():
 @app.route("/review/<review_id>")
 def review(review_id):
     """
-    This route takes user to a review page based 
-    on the _id saved to mongodb for the selected review. 
+    This route takes user to a review page based
+    on the _id saved to mongodb for the selected review.
     Reviews are selected from either index or profile page.
-    It also allows comments to display on the reviews page 
-    by matching comments saved in comments db to the _id 
+    It also allows comments to display on the reviews page
+    by matching comments saved in comments db to the _id
     for the review page they were posted on.
     """
     # Gets review based on which review was selected on index or profile page
     review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
-    '''stripped = ''.join(c for c in review['book_title'] if c.isalnum())
-    review['stripped_title'] = stripped '''
-    
-    # Gets comments based on which review_id was saved 
+
+    # Gets comments based on which review_id was saved
     # into db for comment when it was posted (see /comment for further details)
     comments = mongo.db.comments.find({"book_id": ObjectId(review_id)})
     return render_template("review.html", review=review, comments=comments)
@@ -167,13 +165,13 @@ def review(review_id):
 
 @app.route("/write_review", methods=["GET", "POST"])
 def write_review():
-    """ 
-    This route allows user to add a review to database to then be 
+    """
+    This route allows user to add a review to database to then be
     displayed on index, profile & review pages.
     """
     if request.method == "POST":
-        # Dictionary determining what information is added 
-        # when user submits a review 
+        # Dictionary determining what information is added
+        # when user submits a review
         review = {
             "book_title": request.form.get("book_title"),
             "author": request.form.get("author"),
@@ -185,8 +183,8 @@ def write_review():
         }
         # Inserts Review
         mongo.db.reviews.insert_one(review)
-        flash("Review Uploaded")
-        return redirect(url_for("get_index"))
+        return redirect(url_for(
+                    "profile", username=session["user"]))
 
     # Allows genre db to be displayed in write_review form
     genre = mongo.db.genre.find().sort("genre_name", 1)
@@ -197,7 +195,7 @@ def write_review():
 def edit_review(review_id):
     """
     This route allows logged in user to edit reviews they have posted
-    """ 
+    """
     if request.method == "POST":
         # Dictionary determining what information is to be edited
         edit = {
@@ -207,6 +205,7 @@ def edit_review(review_id):
             "review_body": request.form.get("review_body"),
             "user_name": session["user"],
             "book_cover": request.form.get("book_cover"),
+            "date_posted": datetime.now()
         }
         # Sends review edits to db
         mongo.db.reviews.update({"_id": ObjectId(review_id)}, edit)
@@ -224,18 +223,17 @@ def delete_review(review_id):
     This route deletes selected review
     """
     mongo.db.reviews.remove({"_id": ObjectId(review_id)})
-    flash("Review Deleted")
     return redirect(url_for('profile', username=session['user']))
 
 
 @app.route("/comment/<review_id>", methods=["GET", "POST"])
 def comment(review_id):
     """
-    This route saves comments to db, it also saves the mongo _id 
-    of the review page comment is posted on so that when comments 
+    This route saves comments to db, it also saves the mongo _id
+    of the review page comment is posted on so that when comments
     are displayed app can identify which page to display it on.
-    
-    I did struggle with this one a bit but found a solution in code institute 
+
+    I did struggle with this one a bit but found a solution in code institute
     where someone was trying to do something similar
     """
     if request.method == "POST":
@@ -252,5 +250,5 @@ def comment(review_id):
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
-            port=int(os.environ.get("PORT")), 
+            port=int(os.environ.get("PORT")),
             debug=True)
